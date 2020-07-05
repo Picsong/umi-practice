@@ -62,7 +62,7 @@ const reducer: (state: IState, action: IAction) => IState = function (state, { t
 
 export default function useListModel() {
 	const [state, dispatch] = useReducer(reducer, initState);
-
+	//格式化基础表单数据去除undefined null ''
 	function formatBase(values: IBaseForm) {
 		let newBase: any = {};
 		for (const key in values) {
@@ -72,11 +72,13 @@ export default function useListModel() {
 		}
 		return newBase;
 	}
+
+	//提交表单事件
 	function submitFormAsync(data: IState) {
 		console.log(data);
-		let base = formatBase(data.base);
+		const base = formatBase(data.base);
 		postForm({
-			base,
+			...base,
 			fields1: JSON.stringify(data.fields1),
 			fields2: JSON.stringify(data.fields2),
 			fields3: JSON.stringify(data.fields3),
@@ -88,9 +90,11 @@ export default function useListModel() {
 				console.log(e);
 			});
 	}
+	function getFormByStep() {}
 	return {
 		state,
 		dispatch,
 		submitFormAsync,
+		getFormByStep,
 	};
 }

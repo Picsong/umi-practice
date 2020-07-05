@@ -1,9 +1,10 @@
 import { InitState, IAccessState, LoginRequire } from './types/index';
 
-export default function(initialState: InitState | LoginRequire): IAccessState {
+export default function (initialState: InitState | LoginRequire): IAccessState {
 	const final: IAccessState = {
 		canReadHome: false,
 		canReadList: false,
+		canReadForm: false,
 	};
 	if (typeof initialState === 'string') return final;
 

@@ -19,16 +19,16 @@ export default () => {
 	const cRef = useRef<{ getData: Function }>();
 	const vRef = useRef<{ getData: Function }>();
 	const bRef = useRef<{ getData: Function }>();
-	const { state, dispatch, submitFormAsync } = useModel('useFormModel');
+	const { state, dispatch, submitFormAsync, getFormByStep } = useModel('useFormModel');
 
 	async function submitForm(type: number) {
 		type === 1 ? setRequired(true) : setRequired(false);
 		setTimeout(async () => {
 			try {
 				const base = (await form.validateFields()) as IBaseForm;
-				const fields1 = await cRef.current?.getData();
-				const fields2 = await vRef.current?.getData();
-				const fields3 = await bRef.current?.getData();
+				const fields1 = (await cRef.current?.getData()) as { fields: Fields1[] };
+				const fields2 = (await vRef.current?.getData()) as { fields: Fields2[] };
+				const fields3 = (await bRef.current?.getData()) as { fields: Fields3[] };
 				console.log(base, fields1, fields2, fields3);
 
 				if (type === 1) {
@@ -46,9 +46,9 @@ export default () => {
 						selectedTime: base.selectedTime && base.selectedTime.format('YYYY/MM/DD'),
 						conVal1: base.conVal1 && base.conVal1.format('YYYY/MM/DD'),
 					},
-					fields1,
-					fields2,
-					fields3,
+					fields1: fields1.fields,
+					fields2: fields2.fields,
+					fields3: fields3.fields,
 				});
 			} catch (error) {
 				form.scrollToField(error.errorFields[0].name, { block: 'end' });
@@ -56,7 +56,12 @@ export default () => {
 			}
 		}, 0);
 	}
-
+	useEffect(() => {
+		const id = localStorage.getItem('form');
+		if (id) {
+			getFormByStep();
+		}
+	}, []);
 	useEffect(() => {
 		form.setFieldsValue({
 			...state.base,
@@ -298,7 +303,7 @@ export default () => {
 					<Button onClick={() => submitForm(1)} type="primary" style={{ margin: '20px', width: '200px' }}>
 						下一步
 					</Button>
-					<Button onClick={() => submitForm(2)}>保存</Button>
+					{/* <Button onClick={() => submitForm(2)}>保存</Button> */}
 				</div>
 			</div>
 		</div>

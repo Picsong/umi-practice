@@ -38,7 +38,7 @@ export default {
 						name: '管理员',
 						describe: 0,
 					},
-					auths: ['canReadHome', 'canReadList'],
+					auths: ['canReadHome', 'canReadList', 'canReadForm'],
 				},
 			});
 		} else {
