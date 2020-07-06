@@ -45,6 +45,15 @@ export type Fields3 = {
 	country: string;
 	unit: string;
 };
+export type Fields4 = {
+	name: string;
+	gender: string;
+	age: string;
+	edu: string;
+	title: string;
+	major: string;
+	level: string;
+};
 
 export interface IState {
 	base: IBaseForm;

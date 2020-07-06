@@ -97,7 +97,7 @@ export default () => {
 									</Form.Item>
 								</Col>
 								<Col span="8">
-									<Form.Item name="fName" rules={[{ required, message: '请输入中文名' }]}>
+									<Form.Item name="fName" rules={[{ required, message: '请输入英文名' }]}>
 										<Input allowClear placeholder="英文名（无则用拼音）"></Input>
 									</Form.Item>
 								</Col>
